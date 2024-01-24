@@ -1,32 +1,28 @@
 fn main() {
     pub fn simplify_path(path: String) -> String {
+        let mut input: String = path.clone();
+        let mut input_lngth: usize = path.len();
 
-        #[derive(Debug)]
         pub struct Trailing<'a> {
             slash: Option<char>,
             double_dot: Option<&'a str>
         }
-        let trailing = Trailing {
-            slash: Some('/'),
-            double_dot: Some("..")
-        };
-        println!("{} {}", 
-            format!("{}", trailing.slash.unwrap()), 
-            format!("{}", trailing.double_dot.unwrap()));        // let trail_len: usize = trailing.flatten().len();
-                                                             //
-        let mut input: String = path.clone();
-        let mut input_lngth: usize = path.len();
 
         let trailing = Trailing {
             slash: Some('/'),
             double_dot: Some("..")
         };
+
+        let end_slash = trailing.slash.unwrap();
+        let end_dots = trailing.double_dot.unwrap().chars().collect();
         
-        if input.chars().last() == trailing.slash || trailing.double_dot.is_some() {
-            input.pop();
-            println!("{}", input);
-        }
-        return input;
+        let mut output: Some(<Vec<char>>) = Some(vec![char]) input.chars().collect(); 
+        output: Some(<Vec<char>>) = output.filter(end_slash);
+        output: Some(<Vec<char>>) = output.filter(end_dots);
+        let final_output: String = output.into_iter().collect();
+
+        println!("output: {}", final_output);
+        return final_output;
     }
     
     let in1: &str = "/home";
