@@ -1,36 +1,25 @@
 fn main() {
-    pub fn simplify_path(path: String) -> String {
-        let mut input: String = path.clone();
-        let mut input_lngth: usize = path.len();
+    fn simplify_path(path: &str) -> String {
+        let parts = path.split('/').filter(|s| !s.is_empty() && *s != ".");
+        let mut stack: Vec<&str> = Vec::new();
 
-        pub struct Trailing<'a> {
-            slash: Option<char>,
-            double_dot: Option<&'a str>
+        for part in parts {
+            if part == ".." {
+                stack.pop();
+            } else {
+                stack.push(part);
+            }
         }
 
-        let trailing = Trailing {
-            slash: Some('/'),
-            double_dot: Some("..")
-        };
-
-        let end_slash = trailing.slash.unwrap();
-        let end_dots = trailing.double_dot.unwrap().chars().collect();
-        
-        let mut output: Some(<Vec<char>>) = Some(vec![char]) input.chars().collect(); 
-        output: Some(<Vec<char>>) = output.filter(end_slash);
-        output: Some(<Vec<char>>) = output.filter(end_dots);
-        let final_output: String = output.into_iter().collect();
-
-        println!("output: {}", final_output);
-        return final_output;
+        "/".to_owned() + &stack.join("/")
     }
-    
-    let in1: &str = "/home";
-    let in2: &str = "/../";
 
-    let out1 = simplify_path(in1.to_string());
-    let out2 = simplify_path(in2.to_string());
+    let in1 = "/home/";
+    let in2 = "/../";
+
+    let out1 = simplify_path(in1);
+    let out2 = simplify_path(in2);
 
     println!("Simplified paths: {} {}", out1, out2);
-
 }
+
